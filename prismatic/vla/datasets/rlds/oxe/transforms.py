@@ -59,6 +59,8 @@ def bridge_oxe_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def bridge_orig_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+    
+    #tf.print("Trajectory before:", trajectory["action"].numpy())
     """
     Applies to original version of Bridge V2 from the official project website.
 
@@ -83,6 +85,7 @@ def bridge_orig_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory = relabel_bridge_actions(trajectory)
     trajectory["observation"]["EEF_state"] = trajectory["observation"]["state"][:, :6]
     trajectory["observation"]["gripper_state"] = trajectory["observation"]["state"][:, -1:]
+    #tf.print("Trajectory after:", trajectory["action"].numpy())
     return trajectory
 
 
@@ -735,7 +738,7 @@ def cmu_stretch_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory["action"] = trajectory["action"][..., :-1]
     return trajectory
 
-
+# Perfect example so far
 def gnm_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory["observation"]["state"] = tf.concat(
         (
@@ -840,9 +843,81 @@ def libero_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     trajectory["observation"]["gripper_state"] = trajectory["observation"]["state"][:, -2:]  # 2D gripper state
     return trajectory
 
+# This is what I added: #######################################################
+def case_suction(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+    trajectory["observation"]["state"] = tf.concat(
+        (
+            trajectory["observation"]["state"],
+            tf.zeros_like(trajectory["observation"]["state"][:, :4]),
+        ),
+        axis=-1,
+    )
+    trajectory["action"] = tf.concat(
+        (
+            trajectory["action"],
+            tf.zeros_like(trajectory["action"]),
+            tf.zeros_like(trajectory["action"]),
+            tf.zeros_like(trajectory["action"][:, :1]),
+        ),
+        axis=-1,
+    )
+
+    return trajectory
+###############################################################################
+
+# This is what I added: #######################################################
+def blood_suction(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+    trajectory["observation"]["state"] = tf.concat(
+        (
+            trajectory["observation"]["state"],
+            tf.zeros_like(trajectory["observation"]["state"][:, :4]),
+        ),
+        axis=-1,
+    )
+    trajectory["action"] = tf.concat(
+        (
+            trajectory["action"],
+            tf.zeros_like(trajectory["action"]),
+            tf.zeros_like(trajectory["action"]),
+            tf.zeros_like(trajectory["action"][:, :1]),
+        ),
+        axis=-1,
+    )
+
+    return trajectory
+###############################################################################
+
+def example_dataset(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+    print(trajectory["action"])
+    print(trajectory["observation"]["state"])
+
+    trajectory["observation"]["state"] = tf.concat(
+        (
+            trajectory["observation"]["state"],
+            tf.zeros_like(trajectory["observation"]["state"]),
+            tf.zeros_like(trajectory["observation"]["state"][:, :2])
+        ),
+        axis=-1,
+
+    )
+    trajectory["action"] = tf.concat(
+        (
+            trajectory["action"],
+            tf.zeros_like(trajectory["action"]),
+            tf.zeros_like(trajectory["action"][:, :1]),
+        ),
+        axis=-1,
+    )
+    print("After",trajectory["action"])
+    print("After",trajectory["observation"]["state"])
+    return trajectory
 
 # === Registry ===
 OXE_STANDARDIZATION_TRANSFORMS = {
+    # This is what I added:
+    "example_dataset": example_dataset,
+    "blood_suction": blood_suction,
+    "case_suction": case_suction,
     "bridge_oxe": bridge_oxe_dataset_transform,
     "bridge_orig": bridge_orig_dataset_transform,
     "bridge_dataset": bridge_orig_dataset_transform,
