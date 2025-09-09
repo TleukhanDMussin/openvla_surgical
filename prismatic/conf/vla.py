@@ -229,6 +229,10 @@ class VLARegistry(Enum):
     # === DROID Fine-tuning Configs ===
     SIGLIP_224PX_MX_DROID_WIPE = Exp_SigLIP_224px_Droid_Wipe
 
+    # === OpenVLA surgical ===
+
+    openvla_surgical = openvla_surgical
+
     @property
     def vla_id(self) -> str:
         return self.value.vla_id
