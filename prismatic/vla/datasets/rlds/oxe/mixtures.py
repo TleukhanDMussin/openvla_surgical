@@ -15,6 +15,9 @@ OXE_NAMED_MIXTURES: Dict[str, List[Tuple[str, float]]] = {
         ("bridge_orig", 1.0),                                   # Original Version of Bridge V2 from Project Website
     ],
 
+    "surgical": [
+        ("example_dataset", 1.0),
+    ],
 
     # === [Moderate-Scale] Bridge++ Mixtures ===
     "bridge_rt_1": [
