@@ -197,6 +197,7 @@ class Exp_SigLIP_224px_Droid_Wipe(Exp_SigLIP_224px_Bridge):
 
     data_mix: str = "droid_wipe"
 
+@dataclass
 # This is what I added:
 class openvla_surgical(Exp_SigLIP_224px_Bridge):
     vla_id: str = "openvla_surgical"
