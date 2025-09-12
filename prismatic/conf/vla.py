@@ -233,7 +233,7 @@ class VLARegistry(Enum):
 
     # === OpenVLA surgical ===
 
-    openvla_surgical = openvla_surgical
+    OPENVLA_SURGICAL = OPENVLA_SURGICAL
 
     @property
     def vla_id(self) -> str:
