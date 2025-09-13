@@ -888,9 +888,6 @@ def blood_suction(trajectory: Dict[str, Any]) -> Dict[str, Any]:
 ###############################################################################
 
 def example_dataset(trajectory: Dict[str, Any]) -> Dict[str, Any]:
-    print(trajectory["action"])
-    print(trajectory["observation"]["state"])
-
     trajectory["observation"]["state"] = tf.concat(
         (
             trajectory["observation"]["state"],
@@ -908,8 +905,7 @@ def example_dataset(trajectory: Dict[str, Any]) -> Dict[str, Any]:
         ),
         axis=-1,
     )
-    print("After",trajectory["action"])
-    print("After",trajectory["observation"]["state"])
+    print(trajectory["language_instruction"])
     return trajectory
 
 # === Registry ===
