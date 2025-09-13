@@ -905,6 +905,8 @@ def example_dataset(trajectory: Dict[str, Any]) -> Dict[str, Any]:
         ),
         axis=-1,
     )
+
+    tf.print("Static shape:", trajectory["action"].shape)
     print(trajectory["language_instruction"])
     return trajectory
 
