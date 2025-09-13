@@ -193,7 +193,7 @@ class Exp_SigLIP_224px_Sandwich_TDROID_CarrotInBowl(Exp_SigLIP_224px_Bridge):
 @dataclass
 class Exp_SigLIP_224px_Droid_Wipe(Exp_SigLIP_224px_Bridge):
     vla_id: str = "siglip-224px+mx-droid_wipe"
-    base_vlm: Union[str, Path] = "siglip-224px+7b"
+    base_vlm: Union[str, Path] = "prism-dinosiglip-224px+7b"
 
     data_mix: str = "droid_wipe"
 
